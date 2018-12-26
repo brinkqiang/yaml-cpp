@@ -16,12 +16,15 @@ set(YAML_CPP_VERSION_MINOR "6")
 set(YAML_CPP_VERSION_PATCH "2")
 set(YAML_CPP_VERSION "${YAML_CPP_VERSION_MAJOR}.${YAML_CPP_VERSION_MINOR}.${YAML_CPP_VERSION_PATCH}")
 
+LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/lib)
 
+SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
+SET(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
 ###
 ### Project options
 ###
 ## Project stuff
-option(YAML_CPP_BUILD_TESTS "Enable testing" ON)
+option(YAML_CPP_BUILD_TESTS "Enable testing" OFF)
 option(YAML_CPP_BUILD_TOOLS "Enable parse tools" ON)
 option(YAML_CPP_BUILD_CONTRIB "Enable contrib stuff in library" ON)
 option(YAML_CPP_INSTALL "Enable generation of install target" ON)
@@ -351,6 +354,7 @@ endif()
 if(YAML_CPP_BUILD_TESTS)
 	enable_testing()
 	add_subdirectory(test)
+
 endif()
 if(YAML_CPP_BUILD_TOOLS)
 	add_subdirectory(util)
@@ -362,3 +366,7 @@ add_custom_target(format
 	COMMAND clang-format --style=file -i ${all_sources}
 	COMMENT "Running clang-format"
 	VERBATIM)
+
+
+add_executable(myyaml-cpptest ${CMAKE_CURRENT_SOURCE_DIR}/test/myyaml-cpptest.cpp)
+target_link_libraries(myyaml-cpptest yaml-cpp)
