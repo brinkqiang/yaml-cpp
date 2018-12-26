@@ -15,7 +15,7 @@
 # libtoolize && aclocal && autoheader && autoconf && automake --add-missing
 # sh configure
 # popd
-
+pip install pyyaml
 rm -rf build
 mkdir build
 pushd build
